@@ -1,14 +1,14 @@
 #include <Dictionary.h> //Biblioteca que permite el uso de diccionarios
 
-int myInts[64];     //Array para almacenar 64 muestras de la señal de entrada.
+int myInts[64];     //Array para almacenar 64 muestras de la seÃ±al de entrada.
 int j = 0;          //Variable de control para el bucle de muestro.
 int a = 7;          //Variable auxiliar para el bucle de muestro.
 int b = 0;          //Variable utilizada para controlar el flujo del programa. Inicia en 0, permitiendo la ejecucion del bloque de muestreo.
-                    //Una vez finalizado el muestreo se coloca en 1 y permite la ejecuccion del bloque que realiza la FFT y la transmision de la señal.
+                    //Una vez finalizado el muestreo se coloca en 1 y permite la ejecuccion del bloque que realiza la FFT y la transmision de la seÃ±al.
 
 
-int valSin;         //Variable donde se almacena la señal reconstruida con sus tres primeras componentes, obtenidas de la funcion FFT.
-                    //Representa la señal en valores del rango 0-255, para poder utilizar el PORTD(Registro 8bit)
+int valSin;         //Variable donde se almacena la seÃ±al reconstruida con sus tres primeras componentes, obtenidas de la funcion FFT.
+                    //Representa la seÃ±al en valores del rango 0-255, para poder utilizar el PORTD(Registro 8bit)
 
 byte sine_data [91]={
 0,  
@@ -34,8 +34,8 @@ void loop() {
   
   if(b == 0){                              //Inicio BLOQUE DE MUESTREO
   
-  if(j>6 && j<71){                        //Se omiten las primeras 6 lecturas de la señal
-    myInts[j-a] = analogRead(A1);         //Se almacenan 64 lecturas de la señal en el array myInts[]
+  if(j>6 && j<71){                        //Se omiten las primeras 6 lecturas de la seÃ±al
+    myInts[j-a] = analogRead(A1);         //Se almacenan 64 lecturas de la seÃ±al en el array myInts[]
   }
   j = j +1;
   delay(10);
@@ -52,11 +52,11 @@ void loop() {
     float a_peak3 = MyData.get(f_peaks[2])/27000;      //Aplicamos un factor de correcion para expresar la amplitud en Volts y disminuirla, para no
                                                        //provocar un desbordamiento sobre los 8 bits de la salida
     
-    for (int i = 0; i < 360; i++) {   //Con los datos obtenidos, reconstruimos la señal en valores entre 0 y 255, y la enviamos al PORTD
+    for (int i = 0; i < 360; i++) {   //Con los datos obtenidos, reconstruimos la seÃ±al en valores entre 0 y 255, y la enviamos al PORTD
     valSin = ((((a_peak1*sin(f_peaks[0] * i * DEG_TO_RAD)+(a_peak2*sin(f_peaks[1] *i * DEG_TO_RAD))+(a_peak3*sin(f_peaks[2] *i * DEG_TO_RAD))) + 1) * 255) / 2);  //El maximo valor posible representable es 255, porque tenemos 8bits.
     PORTD = valSin;  
-    Serial.println(analogRead(A0)); // Realimentamos Arduino con la señal del R2R, para visualizar en el monitor serie.
-    }                               // Se podria conectar la señal del R2R a un osciloscopio, para visualizarla.
+    Serial.println(analogRead(A0)); // Realimentamos Arduino con la seÃ±al del R2R, para visualizar en el monitor serie.
+    }                               // Se podria conectar la seÃ±al del R2R a un osciloscopio, para visualizarla.
   }
 }
 
@@ -78,7 +78,7 @@ float out_r[data[o]]={};   //Parte real de la transformada
 float out_im[data[o]]={};  //Parte imaginaria
            
 x=0;  
-      for(int b=0;b<o;b++)                     //Inversión de bits.
+      for(int b=0;b<o;b++)                     //InversiÃ³n de bits.
          {
           c1=data[b];
           f=data[o]/(c1+c1);
@@ -90,7 +90,7 @@ x=0;
          }
 
  
-      for(int i=0;i<data[o];i++)            //Actualizar el array de entrada según el orden inverso de bits.
+      for(int i=0;i<data[o];i++)            //Actualizar el array de entrada segÃºn el orden inverso de bits.
          {
           if(in_ps[i]<a)
           {out_r[i]=in[in_ps[i]];}
@@ -146,7 +146,7 @@ float e,c,s,tr,ti;
 
 
 
-x=0;       // Detección de picos
+x=0;       // DetecciÃ³n de picos
    for(int i=1;i<data[o-1]-1;i++)
       {
       if(out_r[i]>out_r[i-1] && out_r[i]>out_r[i+1]) 
